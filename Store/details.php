@@ -14,7 +14,7 @@
                        <a href="index.php">Home</a>
                    </li>
                    <li>
-                       Shop
+                       <a href="shop.php">Shop</a>
                    </li>
                    
                    <li>
@@ -24,18 +24,9 @@
                </ul><!-- breadcrumb Finish -->
                
            </div><!-- col-md-12 Finish -->
+       
            
-           <div class="col-md-3"><!-- col-md-3 Begin -->
-   
-   <?php 
-    
-    include("includes/sidebar.php");
-    
-    ?>
-               
-           </div><!-- col-md-3 Finish -->
-           
-           <div class="col-md-9"><!-- col-md-9 Begin -->
+           <div class="col-md-12"><!-- col-md-9 Begin -->
                <div id="productMain" class="row"><!-- row Begin -->
                    <div class="col-sm-6"><!-- col-sm-6 Begin -->
                        <div id="mainImage"><!-- #mainImage Begin -->
@@ -74,6 +65,8 @@
                                
                            </div><!-- carousel slide Finish -->
                        </div><!-- mainImage Finish -->
+                    
+                       
                    </div><!-- col-sm-6 Finish -->
                    
                    <div class="col-sm-6"><!-- col-sm-6 Begin -->
@@ -98,7 +91,45 @@
                                     </div><!-- col-md-7 Finish -->
                                    
                                </div><!-- form-group Finish -->
+                               <div class="form-group"><!-- form-group Begin -->
+                                   <label for="" class="col-md-5 control-label">Colors</label>
+                               </div>
+                                         
+                                
+                               <div class="form-group">
+                              
                                
+                       <div class="row" id="thumbs"><!-- row Begin -->
+                           
+                           <div class="col-xs-3"><!-- col-xs-4 Begin -->
+                               <a data-target="#myCarousel" data-slide-to="0"  href="#" class="thumb"><!-- thumb Begin -->
+                                    <img src="admin_area/product_images/<?php echo $pro_img1; ?>" alt="product 1" class="img-responsive">
+                               </a><!-- thumb Finish -->
+                           </div><!-- col-xs-4 Finish -->
+                           
+                           <div class="col-xs-3"><!-- col-xs-4 Begin -->
+                               <a data-target="#myCarousel" data-slide-to="1"  href="#" class="thumb"><!-- thumb Begin -->
+                                   <img src="admin_area/product_images/<?php echo $pro_img2; ?>" alt="product 2" class="img-responsive">
+                               </a><!-- thumb Finish -->
+                           </div><!-- col-xs-4 Finish -->
+                           
+                           <div class="col-xs-3"><!-- col-xs-4 Begin -->
+                               <a data-target="#myCarousel" data-slide-to="2"  href="#" class="thumb"><!-- thumb Begin -->
+                                   <img src="admin_area/product_images/<?php echo $pro_img3; ?>" alt="product 3" class="img-responsive">
+                               </a><!-- thumb Finish -->
+                           </div><!-- col-xs-4 Finish -->
+                           <div class="col-xs-3"><!-- col-xs-4 Begin -->
+                               <a data-target="#myCarousel" data-slide-to="3"  href="#" class="thumb"><!-- thumb Begin -->
+                                   <img src="admin_area/product_images/<?php echo $pro_img4; ?>" alt="product 4" class="img-responsive">
+                               </a><!-- thumb Finish -->
+                               
+                           </div><!-- col-xs-4 Finish -->
+                       </div><!-- row Finish -->
+                        
+                               
+                                   
+                                   
+                               </div><!-- form-group Finish -->
                                <div class="form-group"><!-- form-group Begin -->
                                    <label class="col-md-5 control-label">Product Size</label>
                                    
@@ -107,9 +138,26 @@
                                        <select name="product_size" class="form-control" required oninput="setCustomValidity('')" oninvalid="setCustomValidity('Must pick 1 size for the product')"><!-- form-control Begin -->
                                           
                                            <option disabled selected>Select a Size</option>
-                                           <option>Small</option>
-                                           <option>Medium</option>
-                                           <option>Large</option>
+                                           
+                                            <?php 
+                              
+                              $get_size = "select * from size";
+                              $run_size = mysqli_query($con,$get_size);
+                              
+                              while ($row_size=mysqli_fetch_array($run_size)){
+                                  
+                                  $size_id = $row_size['size_id'];
+                                  $size = $row_size['size'];
+                                  
+                                  echo "
+                                  
+                                  <option value='$size'> $size </option>
+                                  
+                                  ";
+                                  
+                              }
+                              
+                              ?>
                                            
                                        </select><!-- form-control Finish -->
                                        
@@ -124,33 +172,33 @@
                            
                        </div><!-- box Finish -->
                        
-                       <div class="row" id="thumbs"><!-- row Begin -->
+                     
+                          <div class="row" id="thumbs"><!-- row Begin -->
                            
-                           <div class="col-xs-6 col-md-3"><!-- col-xs-4 Begin -->
+                           <div class="col-xs-3"><!-- col-xs-4 Begin -->
                                <a data-target="#myCarousel" data-slide-to="0"  href="#" class="thumb"><!-- thumb Begin -->
-                                   <img src="admin_area/product_images/<?php echo $pro_img1; ?>" alt="product 1" class="img-responsive">
+                                    <img src="admin_area/product_images/<?php echo $pro_img1; ?>" alt="product 1" class="img-responsive">
                                </a><!-- thumb Finish -->
                            </div><!-- col-xs-4 Finish -->
                            
-                           <div class="col-xs-6 col-md-3"><!-- col-xs-4 Begin -->
+                           <div class="col-xs-3"><!-- col-xs-4 Begin -->
                                <a data-target="#myCarousel" data-slide-to="1"  href="#" class="thumb"><!-- thumb Begin -->
                                    <img src="admin_area/product_images/<?php echo $pro_img2; ?>" alt="product 2" class="img-responsive">
                                </a><!-- thumb Finish -->
                            </div><!-- col-xs-4 Finish -->
                            
-                           <div class="col-xs-6 col-md-3"><!-- col-xs-4 Begin -->
+                           <div class="col-xs-3"><!-- col-xs-4 Begin -->
                                <a data-target="#myCarousel" data-slide-to="2"  href="#" class="thumb"><!-- thumb Begin -->
                                    <img src="admin_area/product_images/<?php echo $pro_img3; ?>" alt="product 3" class="img-responsive">
                                </a><!-- thumb Finish -->
                            </div><!-- col-xs-4 Finish -->
-                           
-                            <div class="col-xs-6 col-md-3"><!-- col-xs-4 Begin -->
+                           <div class="col-xs-3"><!-- col-xs-4 Begin -->
                                <a data-target="#myCarousel" data-slide-to="3"  href="#" class="thumb"><!-- thumb Begin -->
                                    <img src="admin_area/product_images/<?php echo $pro_img4; ?>" alt="product 4" class="img-responsive">
                                </a><!-- thumb Finish -->
                            </div><!-- col-xs-4 Finish -->
-                       </div><!-- row Finish -->
-                       
+                           
+                       </div><!-- row Finish -->  
                    </div><!-- col-sm-6 Finish -->
                    
                    

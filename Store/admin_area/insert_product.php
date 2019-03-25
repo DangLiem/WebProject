@@ -1,6 +1,10 @@
 <?php 
 
-include("includes/db.php");
+    if(!isset($_SESSION['admin_email'])){
+        
+        echo "<script>window.open('login.php','_self')</script>";
+        
+    }else{
 
 ?>
 
@@ -10,8 +14,6 @@ include("includes/db.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Insert Products </title>
-    <link rel="stylesheet" href="css/bootstrap-337.min.css">
-    <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
 </head>
 <body>
     
@@ -155,7 +157,7 @@ include("includes/db.php");
                       
                       <div class="col-md-6"><!-- col-md-6 Begin -->
                           
-                          <input name="product_img2" type="file" class="form-control" required>
+                          <input name="product_img2" type="file" class="form-control">
                           
                       </div><!-- col-md-6 Finish -->
                        
@@ -167,18 +169,18 @@ include("includes/db.php");
                       
                       <div class="col-md-6"><!-- col-md-6 Begin -->
                           
-                          <input name="product_img3" type="file" class="form-control form-height-custom" required>
+                          <input name="product_img3" type="file" class="form-control form-height-custom">
                           
                       </div><!-- col-md-6 Finish -->
                        
                    </div><!-- form-group Finish -->
-                    <div class="form-group"><!-- form-group Begin -->
+                   <div class="form-group"><!-- form-group Begin -->
                        
                       <label class="col-md-3 control-label"> Product Image 4 </label> 
                       
                       <div class="col-md-6"><!-- col-md-6 Begin -->
                           
-                          <input name="product_img4" type="file" class="form-control form-height-custom" required>
+                          <input name="product_img3" type="file" class="form-control form-height-custom">
                           
                       </div><!-- col-md-6 Finish -->
                        
@@ -241,9 +243,7 @@ include("includes/db.php");
     </div><!-- col-lg-12 Finish -->
     
 </div><!-- row Finish -->
-        
-    <script src="js/jquery-331.min.js"></script>
-    <script src="js/bootstrap-337.min.js"></script> 
+   
     <script src="js/tinymce/tinymce.min.js"></script>
     <script>tinymce.init({ selector:'textarea'});</script>
 </body>
@@ -290,3 +290,6 @@ if(isset($_POST['submit'])){
 }
 
 ?>
+
+
+<?php } ?>

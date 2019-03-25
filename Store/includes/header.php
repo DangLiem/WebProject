@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 include("includes/db.php");
 include("functions/functions.php");
 
@@ -63,7 +65,23 @@ if(isset($_GET['pro_id'])){
            
            <div class="col-md-6 offer"><!-- col-md-6 offer Begin -->
                
-               <a href="#" class="btn btn-success btn-sm">Welcome</a>
+               <a href="#" class="btn btn-success btn-sm">
+                   
+                   <?php 
+                   
+                   if(!isset($_SESSION['customer_email'])){
+                       
+                       echo "Welcome: Guest";
+                       
+                   }else{
+                       
+                       echo "Welcome: " . $_SESSION['customer_email'] . "";
+                       
+                   }
+                   
+                   ?>
+                   
+               </a>
                <a href="checkout.php"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
                
            </div><!-- col-md-6 offer Finish -->
@@ -82,7 +100,23 @@ if(isset($_GET['pro_id'])){
                        <a href="cart.php">Go To Cart</a>
                    </li>
                    <li>
-                       <a href="checkout.php">Login</a>
+                       <a href="checkout.php">
+                           
+                           <?php 
+                           
+                           if(!isset($_SESSION['customer_email'])){
+                       
+                                echo "<a href='checkout.php'> Login </a>";
+
+                               }else{
+
+                                echo " <a href='logout.php'> Log Out </a> ";
+
+                               }
+                           
+                           ?>
+                           
+                       </a>
                    </li>
                    
                </ul><!-- menu Finish -->
@@ -114,14 +148,14 @@ if(isset($_GET['pro_id'])){
                    
                </button>
                
-               <button class="navbar-toggle" data-toggle="collapse" data-target="#search">
+               <button class="navbar-toggle" data-toggle="collapse" data-target="#search" >
                    
                    <span class="sr-only">Toggle Search</span>
                    
                    <i class="fa fa-search"></i>
                    
                </button>
-               
+              
            </div><!-- navbar-header Finish -->
            
            <div class="navbar-collapse collapse" id="navigation"><!-- navbar-collapse collapse Begin -->
@@ -137,7 +171,21 @@ if(isset($_GET['pro_id'])){
                            <a href="shop.php">Shop</a>
                        </li>
                        <li class="<?php if($active=='Account') echo"active"; ?>">
-                           <a href="customer/my_account.php">My Account</a>
+                           
+                           <?php 
+                           
+                           if(!isset($_SESSION['customer_email'])){
+                               
+                               echo"<a href='checkout.php'>My Account</a>";
+                               
+                           }else{
+                               
+                              echo"<a href='customer/my_account.php?my_orders'>My Account</a>"; 
+                               
+                           }
+                           
+                           ?>
+                           
                        </li>
                        <li class="<?php if($active=='Cart') echo"active"; ?>">
                            <a href="cart.php">Shopping Cart</a>
@@ -160,19 +208,20 @@ if(isset($_GET['pro_id'])){
                
                <div class="navbar-collapse collapse right"><!-- navbar-collapse collapse right Begin -->
                    
-                   <button class="btn btn-primary navbar-btn" type="button" data-toggle="collapse" data-target="#search"><!-- btn btn-primary navbar-btn Begin -->
+                   <button class="btn btn-primary navbar-btn"  type="button" data-toggle="collapse" data-target="#search"><!-- btn btn-primary navbar-btn Begin -->
                        
                        <span class="sr-only">Toggle Search</span>
                        
                        <i class="fa fa-search"></i>
                        
+                     
                    </button><!-- btn btn-primary navbar-btn Finish -->
-                   
+                
                </div><!-- navbar-collapse collapse right Finish -->
                
                <div class="collapse clearfix" id="search"><!-- collapse clearfix Begin -->
                    
-                   <form method="get" action="results.php" class="navbar-form"><!-- navbar-form Begin -->
+                   <form method="get" action="result.php" class="navbar-form"><!-- navbar-form Begin -->
                        
                        <div class="input-group"><!-- input-group Begin -->
                            
@@ -187,7 +236,8 @@ if(isset($_GET['pro_id'])){
                            </button><!-- btn btn-primary Finish -->
                            
                            </span><!-- input-group-btn Finish -->
-                           
+                             
+                     
                        </div><!-- input-group Finish -->
                        
                    </form><!-- navbar-form Finish -->

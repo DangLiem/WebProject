@@ -1,9 +1,29 @@
+<?php 
+
+session_start();
+
+if(!isset($_SESSION['customer_email'])){
+    
+    echo "<script>window.open('../checkout.php','_self')</script>";
+    
+}else{
+
+include("includes/db.php");
+include("functions/functions.php");
+    
+if(isset($_GET['order_id'])){
+    
+    $order_id = $_GET['order_id'];
+    
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Store</title>
+    <title>M-Dev Store</title>
     <link rel="stylesheet" href="styles/bootstrap-337.min.css">
     <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -16,8 +36,24 @@
            
            <div class="col-md-6 offer"><!-- col-md-6 offer Begin -->
                
-               <a href="#" class="btn btn-success btn-sm">Welcome</a>
-               <a href="checkout.php">4 Items In Your Cart | Total Price: $300 </a>
+               <a href="#" class="btn btn-success btn-sm">
+                   
+                   <?php 
+                   
+                   if(!isset($_SESSION['customer_email'])){
+                       
+                       echo "Welcome: Guest";
+                       
+                   }else{
+                       
+                       echo "Welcome: " . $_SESSION['customer_email'] . "";
+                       
+                   }
+                   
+                   ?>
+               
+               </a>
+               <a href="checkout.php"> <?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
                
            </div><!-- col-md-6 offer Finish -->
            
@@ -35,7 +71,23 @@
                        <a href="../cart.php">Go To Cart</a>
                    </li>
                    <li>
-                       <a href="../checkout.php">Login</a>
+                       <a href="../checkout.php">
+                       
+                        <?php 
+                           
+                           if(!isset($_SESSION['customer_email'])){
+                       
+                                echo "<a href='checkout.php'> Login </a>";
+
+                               }else{
+
+                                echo " <a href='logout.php'> Log Out </a> ";
+
+                               }
+                           
+                         ?>
+                       
+                       </a>
                    </li>
                    
                </ul><!-- menu Finish -->
@@ -52,7 +104,7 @@
            
            <div class="navbar-header"><!-- navbar-header Begin -->
                
-               <a href="index.php" class="navbar-brand home"><!-- navbar-brand home Begin -->
+               <a href="../index.php" class="navbar-brand home"><!-- navbar-brand home Begin -->
                    
                    <img src="images/ecom-store-logo.png" alt="M-dev-Store Logo" class="hidden-xs">
                    <img src="images/ecom-store-logo-mobile.png" alt="M-dev-Store Logo Mobile" class="visible-xs">
@@ -103,11 +155,11 @@
                    
                </div><!-- padding-nav Finish -->
                
-               <a href="cart.php" class="btn navbar-btn btn-primary right"><!-- btn navbar-btn btn-primary Begin -->
+               <a href="../cart.php" class="btn navbar-btn btn-primary right"><!-- btn navbar-btn btn-primary Begin -->
                    
                    <i class="fa fa-shopping-cart"></i>
                    
-                   <span>4 Items In Your Cart</span>
+                   <span><?php items(); ?> Items In Your Cart</span>
                    
                </a><!-- btn navbar-btn btn-primary Finish -->
                
@@ -184,7 +236,7 @@
                    
                    <h1 align="center"> Please confirm your payment</h1>
                    
-                   <form action="confirm.php" method="post" enctype="multipart/form-data"><!-- form Begin -->
+                   <form action="confirm.php?update_id=<?php echo $order_id;  ?>" method="post" enctype="multipart/form-data"><!-- form Begin -->
                        
                        <div class="form-group"><!-- form-group Begin -->
                            
@@ -210,8 +262,8 @@
                               
                               <option> Select Payment Mode </option>
                               <option> Back Code </option>
-                              <option> UBL / Omni Paisa </option>
-                              <option> Easy Paisa </option>
+                              <option> Paypall </option>
+                              <option> Payoneer </option>
                               <option> Western Union </option>
                               
                           </select><!-- form-control Finish -->
@@ -228,7 +280,7 @@
                        
                        <div class="form-group"><!-- form-group Begin -->
                            
-                         <label> Omni Paisa / East Paisa: </label>
+                         <label> Paypall / Payoneer / Western Union Code: </label>
                           
                           <input type="text" class="form-control" name="code" required>
                            
@@ -244,7 +296,7 @@
                        
                        <div class="text-center"><!-- text-center Begin -->
                            
-                           <button class="btn btn-primary btn-lg"><!-- tn btn-primary btn-lg Begin -->
+                           <button class="btn btn-primary btn-lg" name="confirm_payment"><!-- tn btn-primary btn-lg Begin -->
                                
                                <i class="fa fa-user-md"></i> Confirm Payment
                                
@@ -253,6 +305,50 @@
                        </div><!-- text-center Finish -->
                        
                    </form><!-- form Finish -->
+                   
+                   <?php 
+                   
+                    if(isset($_POST['confirm_payment'])){
+                        
+                        $update_id = $_GET['update_id'];
+                        
+                        $invoice_no = $_POST['invoice_no'];
+                        
+                        $amount = $_POST['amount_sent'];
+                        
+                        $payment_mode = $_POST['payment_mode'];
+                        
+                        $ref_no = $_POST['ref_no'];
+                        
+                        $code = $_POST['code'];
+                        
+                        $payment_date = $_POST['date'];
+                        
+                        $complete = "Complete";
+                        
+                        $insert_payment = "insert into payments (invoice_no,amount,payment_mode,ref_no,code,payment_date) values ('$invoice_no','$amount','$payment_mode','$ref_no','$code','$payment_date')";
+                        
+                        $run_payment = mysqli_query($con,$insert_payment);
+                        
+                        $update_customer_order = "update customer_orders set order_status='$complete' where order_id='$update_id'";
+                        
+                        $run_customer_order = mysqli_query($con,$update_customer_order);
+                        
+                        $update_pending_order = "update pending_orders set order_status='$complete' where order_id='$update_id'";
+                        
+                        $run_pending_order = mysqli_query($con,$update_pending_order);
+                        
+                        if($run_pending_order){
+                            
+                            echo "<script>alert('Thank You for purchasing, your orders will be completed within 24 hours work')</script>";
+                            
+                            echo "<script>window.open('my_account.php?my_orders','_self')</script>";
+                            
+                        }
+                        
+                    }
+                   
+                   ?>
                    
                </div><!-- box Finish -->
                
@@ -273,3 +369,4 @@
     
 </body>
 </html>
+<?php } ?>

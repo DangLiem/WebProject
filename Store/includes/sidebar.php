@@ -6,8 +6,7 @@
     <div class="panel-body"><!-- panel-body Begin -->
         <ul class="nav nav-pills nav-stacked category-menu"><!-- nav nav-pills nav-stacked category-menu Begin -->
             
-          <?php getPCats(); ?>      
-                
+            <?php getPCats(); ?>
             
         </ul><!-- nav nav-pills nav-stacked category-menu Finish -->
     </div><!-- panel-body Finish -->
@@ -23,7 +22,7 @@
     <div class="panel-body"><!-- panel-body Begin -->
         <ul class="nav nav-pills nav-stacked category-menu"><!-- nav nav-pills nav-stacked category-menu Begin -->
             
-           <?php getCats(); ?>  
+            <?php getCats(); ?>
             
         </ul><!-- nav nav-pills nav-stacked category-menu Finish -->
     </div><!-- panel-body Finish -->

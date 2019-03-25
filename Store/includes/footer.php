@@ -17,7 +17,21 @@
                 <h4>User Section</h4>
                 
                 <ul><!-- ul Begin -->
-                    <li><a href="checkout.php">Login</a></li>
+                           
+                           <?php 
+                           
+                           if(!isset($_SESSION['customer_email'])){
+                               
+                               echo"<a href='checkout.php'>Login</a>";
+                               
+                           }else{
+                               
+                              echo"<a href='customer/my_account.php?my_orders'>My Account</a>"; 
+                               
+                           }
+                           
+                           ?>
+                    
                     <li><a href="customer_register.php">Register</a></li>
                 </ul><!-- ul Finish -->
                 
@@ -73,12 +87,12 @@
                 
                 <p><!-- p Start -->
                     
-                    <strong>Store Media inc.</strong>
-                    <br/>Luffy
-                    <br/>M.D.Lyffy
-                    <br/>0123456789
-                    <br/>onepiece@gmail.com
-                    <br/><strong>Mr.0</strong>
+                    <strong>jajhaja</strong>
+                    <br/>hanoi
+                    <br/>hoaiduc
+                    <br/>0906153871
+                    <br/>aaaaaaaa@gmail.com
+                    <br/><strong>MrLuffy</strong>
                     
                 </p><!-- p Finish -->
                 
@@ -134,7 +148,7 @@
     <div class="container"><!-- container Begin -->
         <div class="col-md-6"><!-- col-md-6 Begin -->
             
-            <p class="pull-left">&copy;  Store All Rights Reserve</p>
+            <p class="pull-left">&copy; 2018 M-Dev Store All Rights Reserve</p>
             
         </div><!-- col-md-6 Finish -->
         <div class="col-md-6"><!-- col-md-6 Begin -->
